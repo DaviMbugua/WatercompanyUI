@@ -1,14 +1,12 @@
 
 var selectedRecord = null;
 var selectedRecordID = null;
-var baseUrl = "http://localhost:5000";
+var baseUrl = "https://watercompany1.herokuapp.com/";
 
 // Get cookie
 function getCookie(name) {
-    // Split cookie string and get all individual name=value pairs in an array
     var cookieArr = document.cookie.split(";");
     
-    // Loop through the array elements
     for(var i = 0; i < cookieArr.length; i++) {
         var cookiePair = cookieArr[i].split("=");
         
@@ -24,9 +22,6 @@ function getCookie(name) {
     // Return null if not found
     return null;
 }
-
-
-//-----------------------------------------------Beginning of user Router-----------------------------------
 
 // User Login
 function userLogin(data) {
@@ -85,6 +80,7 @@ function addUserRecordToTable(data) {
 }
 
 function addUser(data) {
+    console.log("called add user ajax");
     var postData = JSON.stringify(data);
     $.ajax({
         type: "POST",
@@ -94,10 +90,11 @@ function addUser(data) {
         contentType: "application/json; charset=utf-8",
         cache: false,
         success: function (response) {
+            console.log("Success");
             var data = response.data;
             console.log(data);
             addUserRecordToTable(data);
-            window.location.href = "./loginbiller.html";
+            window.location.href = "./login.html";
             
         },
         headers:{
@@ -129,12 +126,12 @@ function onUserDetailsSubmit() {
 }
 
 function onUserDetailsSubmitTwo() {
+    console.log("New user details ...");
     var formData = {};
     formData["Email"] = document.getElementById("Email").value;
     formData["UserName"] = document.getElementById("UserName").value;
     formData["Password"] = document.getElementById("Password").value;
     addUser(formData);
-    window.location.href = "./index.html";
     clearUserForm();
 
 }
@@ -257,8 +254,6 @@ function clearUserForm() {
     
 }
 
-//--------------------------------------End of users router ---------------------------------------------------------
-//--------------------------------------Beginning of members router--------------------------------------------------
 // Add member
 function addMemberRecordToTable(data) {
     var memberslist = document.getElementById("memberslist").getElementsByTagName("tbody")[0];
@@ -273,12 +268,11 @@ function addMemberRecordToTable(data) {
     var cell4 = newRecord.insertCell(3);
     cell4.innerHTML = data.Email;
     var cell5 = newRecord.insertCell(4);
-    cell5.innerHTML = '<a onclick="showOne(this)">View</a> <a onclick="onMemberEdit(this)">Edit</a> <a onClick="onMemberDelete(this)">Delete</a>';   
+    cell5.innerHTML = '<a onclick="onMemberEdit(this)">Edit</a> <a onClick="onMemberDelete(this)">Delete</a>';   
 }
 
 function showOne(recordid){
     // take in ID
-    // get /record/id from api    // create divs to show details
     $.ajax({
         type: "GET",
         url: baseUrl + "/members/" + recordid,
@@ -303,10 +297,8 @@ function onMemberFormSubmit() {
 
     if (selectedRecord == null) {
         saveMemberFormData(formData);
-        alert("Client Added Successfully");
     } else {
         updateMemberFormRecord(formData);
-        alert("Client Edited Successfully");
     }
     clearMemberForm();
 }
@@ -343,7 +335,7 @@ function saveBillFormData(data) {
         contentType: "application/json; charset=utf-8",
         cache: false,
         success: function (response) {
-            alert("Bill generated and client notified");
+            alert("Bill generated successfully");
         },
         headers:{
             Accept:"application/json; charset=utf-8",
@@ -366,9 +358,7 @@ function savePayFormData(data) {
         cache: false,
         success: function (response) {
             console.log("Paid");
-            alert("Payment Successful. Thank You");
-            close();
-        },
+            alert("Payment Successful");        },
         headers:{
             Accept:"application/json; charset=utf-8",
             Content_Type:"application/json; charset=utf-8",
@@ -391,6 +381,7 @@ function saveMemberFormData(data) {
         success: function (response) {
             console.log(response.token);
             addMemberRecordToTable(response.data);
+            alert("Member was added successfully ");
            
         },
         headers:{
@@ -480,6 +471,7 @@ function updateMemberFormRecord(data) {
         cache: false,
         success: function () {
             updateMemberTableRecord(data);
+            alert("Member record edited successfully");
         },
         headers:{
             Accept:"application/json; charset=utf-8",
@@ -535,9 +527,6 @@ function clearPayForm() {
     document.getElementById("PaidAmount").value = "";
 }
 
-//----------------------------------End of Members Router------------------------------
-
-//----------------------------------Beginning of Premises Router----------------------- 
 // Add Premise
 function addPremiseRecordToTable(data) {
     var Premiseslist = document.getElementById("Premiseslist").getElementsByTagName("tbody")[0];
@@ -568,10 +557,8 @@ function onPremiseFormSubmit() {
 
     if (selectedRecord == null) {
         savePremiseFormData(formData);
-        alert("Premise Added Successfully");
     } else {
         updatePremiseFormRecord(formData);
-        alert("Premise Edited Successfully");
     }
     clearPremiseForm();
 }
@@ -588,7 +575,7 @@ function savePremiseFormData(data) {
         cache: false,
         success: function (response) {
             addPremiseRecordToTable(response.data);
-           
+            alert("Member Premise added successfully");
             
         },
         headers:{
@@ -598,7 +585,6 @@ function savePremiseFormData(data) {
             Authorization: `token ${getCookie('authToken')}`
         }
        
-        
     });
 }
 
@@ -736,6 +722,7 @@ function updatePremiseFormRecord(data) {
         cache: false,
         success: function () {
             updatePremiseTableRecord(data);
+            alert("Member Premise edited successfully");
         },
         headers:{
             Accept:"application/json; charset=utf-8",
@@ -753,10 +740,6 @@ function clearPremiseForm() {
     document.getElementById("Routeid").value = "";
     
 }
-
-//----------------------------------End of Premises Router-----------------------------
-
-//---------------------------------Beginning of Routes Router---------------------------
 // Add Route
 function addRouteRecordToTable(data) {
     var Routeslist = document.getElementById("Routeslist").getElementsByTagName("tbody")[0];
@@ -773,23 +756,24 @@ function addRouteRecordToTable(data) {
 }
  
 function onRouteFormSubmit() {
-    document.getElementById("Status").style.display = "none";
+    // document.getElementById("Status").style.display = "none";
     var formData = {};
     formData["Route_name"] = document.getElementById("Route_name").value;
 
     if (selectedRecord == null) {
         saveRouteFormData(formData);
-        alert("Route Added Successfully");
+        // alert("Route Added Successfully");
     } else {
         formData["Status"] = document.getElementById("Status").value;
         updateRouteFormRecord(formData);
-        alert("Route Edited Successfully");
+        // alert("Route Edited Successfully");
     }
     clearRouteForm();
 }
 
 // Adding a Route
 function saveRouteFormData(data) {
+    console.log("Add route ajax called");
     var postData = JSON.stringify(data);
     $.ajax({
         type: "POST",
@@ -799,8 +783,9 @@ function saveRouteFormData(data) {
         contentType: "application/json; charset=utf-8",
         cache: false,
         success: function (response) {
+            console.log("Add route success");
             addRouteRecordToTable(response.data);
-           
+            alert("Route Record Added Successfully");
             
         },
         headers:{
@@ -863,6 +848,7 @@ function updateRouteFormRecord(data) {
         cache: false,
         success: function () {
             updateRouteTableRecord(data);
+            alert("Route Record Edited Successfully");
         },
         headers:{
             Accept:"application/json; charset=utf-8",
@@ -880,9 +866,6 @@ function clearRouteForm() {
     
 }
 
-//---------------------------------End of Routes Router-------------------------------------------------
-
-//-----------------------------------------------Beginning of Payments Router--------------------------------------------
 // get all payments
 $(document).ready(() => {
 $.ajax({
@@ -964,8 +947,6 @@ function sortbyPremise(id) {
 
 }
 
-//------------------------------------------End of Payments Router------------------------------------------------------
-//------------------------------------------Beginning of Bills Router---------------------------------------------------
 // Get all bills
 $(document).ready(() => {
     $.ajax({

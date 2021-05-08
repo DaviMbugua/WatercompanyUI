@@ -5,11 +5,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@500&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-    <link rel="stylesheet" href="style.css">
-    <title>Water Company</title>
+    <link rel="stylesheet" href="./style.css">
+    <title>Paying Your Bill</title>
 </head>
 
 <body>
@@ -31,13 +28,15 @@
             </div>
         </nav>
     </header>
-    <div style="margin-left: 45%; background-color: black; width: 200px;">
-        <a href="./signup.html" style="color: #fff;"> Sign Up</a>
-        <a href="./login.html" style="color: #fff;"> Login</a>
-    </div>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery_cookie.js" type="text/javascript"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <form onsubmit="event.preventDefault(); onPayFormSubmit();"
+        style="margin-bottom: 20px; width: 25%; margin-left: 30%; margin-top: 2%;">
+        <h2 style="color: white;">Bill Payment</h2>
+        <input type="number" name="billid" id="billid" placeholder=" Bill ID ..." /> <br>
+        <input type="number" name="PaidAmount" id="PaidAmount" placeholder=" Amount to pay..." /> <br>
+        <input type="submit" name="signup_submit" style="width: 100px;" value="Pay Bill" /> <br>
+    </form>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="./index.js"></script>
 </body>
 
 </html>

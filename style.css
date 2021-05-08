@@ -1,10 +1,14 @@
+body {
+    background-color: #D9DDDC;
+}
+
 *{
     margin: 0;
     padding: 0;
 }
 .header
 {
-    height: 100vh;
+    /* height: 100vh; */
 }
 .navbar-style
 {
@@ -47,6 +51,93 @@ a.btn:hover
 .bannerinfo, .bannerimage
 {
     margin: 38px 0;
+}
+table.allbi
+{ 
+   text-align: center;
+   width:100%;
+   border-collapse: collapse;
+
+}
+
+table {
+    background-color: white;
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 20px;
+    border-color: black;
+    border-radius: 5px;
+}
+
+thead {
+    background-color: black;
+}
+
+th {
+    height: 30px;
+    border: 1px solid white;
+    padding: 5px;
+    color: #fff;
+}
+
+td {
+    height: 30px;
+    border: 1px solid black;
+    padding: 5px;
+}
+
+tr:nth-child(even) {
+    background-color: #fff;
+}
+
+tr {}
+
+tr:hover {
+    background-color: grey;
+}
+
+tbody {}
+
+form {
+    background-color: #222021;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 25px;
+}
+
+input {
+    margin-bottom: 10px;
+    border-radius: 10px;
+    height: 32px;
+}
+
+label {}
+
+select {
+    width: 100px;
+    margin-bottom: 10px;
+}
+
+input [type="submit"] {
+    color: #fff;
+    background: black;
+}
+
+a {
+    cursor: pointer;
+    color: black;
+    padding: 5px;
+}
+
+button {
+    border-radius: 25px;
+    padding: 5px;
+    margin: 5px;
+    background: black;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: black;
 }
 
 
